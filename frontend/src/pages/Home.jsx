@@ -1,0 +1,124 @@
+import React, { useEffect, useState } from 'react';
+import { api } from '../api';
+import { Link } from 'react-router-dom';
+import { useLanguage } from '../contexts/LanguageContext';
+import './Home.css';
+import { FaUser, FaThumbsUp, FaCheckCircle, FaClock, FaCamera } from 'react-icons/fa';
+
+export default function Home() {
+  const [issues, setIssues] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const { t } = useLanguage();
+
+  useEffect(() => { load(); }, []);
+
+  async function load() {
+    setIsLoading(true);
+    try {
+      const res = await api.get('/issues');
+      setIssues(res.data);
+    } catch(err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function upvote(id) {
+    try {
+      const res = await api.put(`/issues/${id}/upvote`);
+      alert(t('upvote') + ' toggled. Your points: ' + res.data.userPoints);
+      load();
+    } catch (err) {
+    setIsLoading(false);
+      alert('Login to ' + t('upvote').toLowerCase());
+    }
+  }
+
+  async function markResolved(id) {
+    try {
+      await api.put(`/issues/${id}/resolve`);
+      load();
+    } catch (err) {
+      alert('Failed to ' + t('markResolved').toLowerCase());
+    }
+  }
+
+  return (
+    <div className="modern-bg">
+      <div className="home-container">
+        <h2 className="home-title">
+          <span>{t('openCivicIssues')}</span>
+        </h2>
+        <div className="issues-list">
+          {isLoading && (
+            <div className="glass-card" style={{ textAlign: 'center' }}>
+              ! {t('initializingBackend')} !
+            </div>
+          )}
+          {!isLoading && issues.length === 0 && (
+            <div className="glass-card" style={{ textAlign: 'center' }}>
+              No open issues found.
+            </div>
+          )}
+
+          {issues.filter(i => i.status !== 'Resolved').map(i => (
+            <div
+              key={i._id}
+              className="glass-card issue-card-modern"
+              style={{ cursor: 'pointer' }}
+              onClick={() => window.location.href = `/issue/${i._id}`}
+            >
+              <div className="issue-card-header">
+                {i.media && Array.isArray(i.media) && i.media.length > 0 && i.media.filter(url => url && url.trim()).find(url => url.match(/\.(jpe?g|png|gif|webp)$/i)) ? (
+                  <img
+                    src={i.media.filter(url => url && url.trim()).find(url => url.match(/\.(jpe?g|png|gif|webp)$/i))}
+                    alt=""
+                    className="issue-thumb"
+                  />
+                ) : (
+                  <div className="issue-thumb issue-thumb-placeholder">
+                    <FaCamera size={32} color="#b0b0b0" />
+                  </div>
+                )}
+                <div className="issue-card-main">
+                  <h3 className="issue-title-link">{i.title}</h3>
+                  <div className="issue-meta-modern">
+                    <span><FaUser size={13} /> {i.createdBy?.name || 'Unknown'} ({t(i.createdBy?.role || 'citizen')})</span>
+                    <span><FaClock size={13} /> {new Date(i.createdAt).toLocaleString()}</span>
+                  </div>
+                  <div className="issue-meta-modern">
+                    <span className="issue-chip">{t(i.category?.toLowerCase() || 'general')}</span>
+                    <span className={`issue-chip urgency-${(i.urgency || '').toLowerCase()}`}>{t(i.urgency?.toLowerCase() || 'low')}</span>
+                  </div>
+                  <p className="issue-desc">{i.description}</p>
+                </div>
+              </div>
+              <div className="issue-card-footer">
+                <span>
+                  <FaCheckCircle color={i.status === 'Pending' ? '#fbc02d' : i.status === 'In Progress' ? '#1976d2' : '#43a047'} />
+                  <b style={{ marginLeft: 4 }}> {t(i.status?.toLowerCase() || 'pending')}</b>
+                </span>
+                <span>
+                  <FaThumbsUp color="#1976d2" style={{ marginRight: 3 }} />
+                  <b>{'upvotes' in i && Array.isArray(i.upvotes) ? i.upvotes.length : (i.upvotesCount || 0)}</b>
+                </span>
+              </div>
+              <div className="issue-actions-modern" onClick={e => e.stopPropagation()}>
+                <button className="btn-modern" onClick={() => upvote(i._id)}>
+                  <FaThumbsUp style={{ marginRight: 4 }} /> {t('upvote')}
+                </button>
+                <button className="btn-modern btn-resolved" onClick={() => markResolved(i._id)}>
+                  <FaCheckCircle style={{ marginRight: 4 }} /> {t('markResolved')}
+                </button>
+                <Link to={`/issue/${i._id}`} className="btn-modern btn-details">
+                  {t('viewDetails')}
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
