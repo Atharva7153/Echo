@@ -1,12 +1,30 @@
-# React + Vite
+# 🏙️ ECHO Frontend (React + Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend client for the Echo Civic Issue Reporting & Engagement Platform.
 
-Currently, two official plugins are available:
+> For complete documentation, Docker deployment instructions, and screenshots, see the [Root README](../README.md).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Quick Start (Frontend Only)
 
-## Expanding the ESLint configuration
+```bash
+# 1. Install dependencies
+npm install
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# 2. Configure environment
+cp .env.example .env
+
+# 3. Start development server
+npm run dev
+
+# 4. Build for production
+npm run build
+```
+
+## Tech Stack
+- **React 19** + **Vite 7**
+- **React Router 7**
+- **Leaflet & React Leaflet** for civic mapping
+- **Framer Motion & GSAP** for animations
+- **Axios** with automatic token injection
+- **Multi-language support** (English, Hindi, Marathi, Gujarati)
+- **Dark / Light theme** support

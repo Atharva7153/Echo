@@ -79,7 +79,6 @@ const translations = {
     analyticsNote: 'These analytics help track reporting trends, departmental performance, and system effectiveness to drive civic engagement and accountability.',
     
     // Leaderboard
-    leaderboard: 'Leaderboard',
     topCitizens: 'Top Citizens',
     topVolunteers: 'Top Volunteers',
     departmentsByIssues: 'Departments by Issues',
@@ -108,7 +107,6 @@ const translations = {
     // Status
     pending: 'Pending',
     inProgress: 'In Progress',
-    resolved: 'Resolved',
     
     // Roles
     citizen: 'Citizen',
@@ -189,7 +187,6 @@ const translations = {
     analyticsNote: 'ये विश्लेषण नागरिक भागीदारी और जवाबदेही को बढ़ावा देने के लिए रिपोर्टिंग प्रवृत्तियों, विभागीय प्रदर्शन और सिस्टम प्रभावशीलता को ट्रैक करने में मदद करते हैं।',
     
     // Leaderboard
-    leaderboard: 'लीडरबोर्ड',
     topCitizens: 'शीर्ष नागरिक',
     topVolunteers: 'शीर्ष स्वयंसेवक',
     departmentsByIssues: 'मुद्दों के अनुसार विभाग',
@@ -218,7 +215,6 @@ const translations = {
     // Status
     pending: 'लंबित',
     inProgress: 'प्रगति में',
-    resolved: 'हल',
     
     // Roles
     citizen: 'नागरिक',
@@ -299,7 +295,6 @@ const translations = {
     analyticsNote: 'हे विश्लेषण नागरिक सहभाग आणि जबाबदारी वाढविण्यासाठी अहवाल देण्याच्या प्रवृत्ती, विभागीय कामगिरी आणि सिस्टम प्रभावीता ट्रॅक करण्यात मदत करते.',
     
     // Leaderboard
-    leaderboard: 'लीडरबोर्ड',
     topCitizens: 'शीर्ष नागरिक',
     topVolunteers: 'शीर्ष स्वयंसेवक',
     departmentsByIssues: 'मुद्द्यांनुसार विभाग',
@@ -328,7 +323,6 @@ const translations = {
     // Status
     pending: 'प्रलंबित',
     inProgress: 'प्रगतीत',
-    resolved: 'सोडवले',
     
     // Roles
     citizen: 'नागरिक',
@@ -409,7 +403,6 @@ const translations = {
     analyticsNote: 'ये विश्लेषण नागरिक भागीदारी और जवाबदेही को बढ़ावा देने के लिए रिपोर्टिंग प्रवृत्तियों, विभागीय प्रदर्शन और सिस्टम प्रभावशीलता को ट्रैक करने में मदद करते हैं।',
     
     // Leaderboard
-    leaderboard: 'लीडरबोर्ड',
     topCitizens: 'शीर्ष नागरिक',
     topVolunteers: 'शीर्ष स्वयंसेवक',
     departmentsByIssues: 'मुद्दों के अनुसार विभाग',
@@ -438,7 +431,6 @@ const translations = {
     // Status
     pending: 'लंबित',
     inProgress: 'प्रगति में',
-    resolved: 'हल',
     
     // Roles
     citizen: 'नागरिक',

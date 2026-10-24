@@ -1,8 +1,12 @@
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '.env') });
+require('dotenv').config();
 const mongoose = require('mongoose');
 const Issue = require('./models/Issue');
 const User = require('./models/User');
 
-mongoose.connect("mongodb+srv://AtharvaS7153:ddskdhf123@atharvadb.olmumix.mongodb.net/", { useNewUrlParser: true, useUnifiedTopology: true });
+const mongoUri = process.env.MONGODB_URI || "mongodb://localhost:27017/echo";
+mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 (async () => {
   const users = await User.find();
