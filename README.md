@@ -145,6 +145,21 @@ docker compose down -v
 
 ---
 
+## ☁️ Deploy to Render / Cloud Platforms (Single-Container Unified Build)
+
+Echo includes a multi-stage root [`Dockerfile`](file:///Dockerfile) and [`render.yaml`](file:///render.yaml) blueprint that compiles the React frontend and packages it directly with the Express backend. This enables deploying the **entire full-stack application on a single free Render Web Service**:
+
+1. In **Render Dashboard**, click **New +** ➔ **Web Service**.
+2. Connect your repository (`https://github.com/Atharva7153/Echo`).
+3. Select **Docker** as the Runtime.
+4. Leave **Dockerfile Path** as `./Dockerfile` (or root default).
+5. Add the environment variable:
+   - `MONGODB_URI`: Your MongoDB Atlas connection string.
+6. Set the **Health Check Path** to `/ping`.
+7. Click **Deploy Web Service**! Both the React frontend and Express API will run together on a single URL.
+
+---
+
 ## 📡 Uptime Monitoring & Ping Pong API
 
 Echo provides dedicated, lightweight endpoints designed for external uptime monitors (e.g., **UptimeRobot**, **Better Stack**, **Cronitor**, **Pingdom**, **Healthchecks.io**, or cloud load balancers).

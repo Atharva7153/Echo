@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 require('dotenv').config();
 
@@ -14,16 +15,25 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Root endpoint
-app.get('/', (req, res) => {
-  res.json({
-    name: 'Echo Civic API',
-    status: 'online',
-    ping: '/api/ping',
-    health: '/api/health',
-    timestamp: new Date().toISOString()
+// Check if compiled frontend build exists (unified container deployment)
+const publicDir = path.join(__dirname, 'public');
+const hasClientBuild = fs.existsSync(publicDir);
+
+if (hasClientBuild) {
+  // Serve static assets from frontend build
+  app.use(express.static(publicDir));
+} else {
+  // Root endpoint info when running API server standalone
+  app.get('/', (req, res) => {
+    res.json({
+      name: 'Echo Civic API',
+      status: 'online',
+      ping: '/api/ping',
+      health: '/api/health',
+      timestamp: new Date().toISOString()
+    });
   });
-});
+}
 
 // Ping endpoint for uptime monitoring (available at /ping and /api/ping)
 const handlePing = (req, res) => {
@@ -58,6 +68,16 @@ app.get('/api/health', handleHealth);
 app.use('/api/issues', issuesRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/leaderboard', leaderboardRoutes);
+
+// Catch-all for SPA client routing when frontend build is present
+if (hasClientBuild) {
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api') || req.path === '/ping' || req.path === '/health') {
+      return next();
+    }
+    res.sendFile(path.join(publicDir, 'index.html'));
+  });
+}
 
 // Error handling middleware (placed after routes)
 app.use((err, req, res, next) => {

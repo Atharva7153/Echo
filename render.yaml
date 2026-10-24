@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: echo-platform
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /ping
+    envVars:
+      - key: MONGODB_URI
+        sync: false
+      - key: VITE_API_URL
+        value: /api
+      - key: VITE_CLOUDINARY_CLOUD_NAME
+        value: tsotl3tf
+      - key: VITE_CLOUDINARY_UPLOAD_PRESET
+        value: civic-issues
